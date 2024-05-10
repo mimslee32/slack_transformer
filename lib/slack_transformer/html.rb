@@ -10,12 +10,13 @@ module SlackTransformer
     attr_reader :input
 
     TRANSFORMERS = [
+      # Need to use the transformers using Nokogiri first before using gsub.
+      SlackTransformer::Html::Lists,
       SlackTransformer::Html::Bold,
       SlackTransformer::Html::Italics,
       SlackTransformer::Html::Strikethrough,
       SlackTransformer::Html::Code,
-      SlackTransformer::Html::Preformatted,
-      SlackTransformer::Html::Lists
+      SlackTransformer::Html::Preformatted
     ]
 
     def initialize(input)
