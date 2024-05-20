@@ -21,7 +21,6 @@ module SlackTransformer
           end
         end
 
-        p links_to_replace
         links_to_replace.each do |html, hyperlink|
           input.gsub!(html, hyperlink)
         end
