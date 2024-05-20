@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module SlackTransformer
   class Html
     class Hyperlinks
@@ -10,13 +12,21 @@ module SlackTransformer
       def to_slack
         fragment = Nokogiri::HTML.fragment(input)
 
+        links_to_replace = {}
         fragment.children.each do |child|
           if child.name == 'a'
-            hyperlink_text = child.text || child.attr('href')
+            hyperlink_text = child.text.empty? ? child.attr('href') : child.text
             hyperlink = "<#{child.attr('href')}|#{hyperlink_text}>"
-            input = input.gsub(child.to_s, hyperlink)
+            links_to_replace[child.to_s] = hyperlink
           end
         end
+
+        p links_to_replace
+        links_to_replace.each do |html, hyperlink|
+          input.gsub!(html, hyperlink)
+        end
+
+      input
       end
     end
   end
