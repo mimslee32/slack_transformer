@@ -15,9 +15,9 @@ module SlackTransformer
         fragment.children.each do |child|
           case child.name
           when 'ul'
-            child.replace("\n" + indent_nested_list(child))
+            child.replace(indent_nested_list(child))
           when 'ol'
-            child.replace("\n" + indent_nested_number_list(child))
+            child.replace(indent_nested_number_list(child))
           end
         end
 
